@@ -1,0 +1,53 @@
+<h2>Register</h2>
+<form [formGroup]="registerForm">
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" formControlName="firstName" class="form-control" appName/>
+        <div class="error-display" *ngIf="registerForm.get('firstName').errors">
+            <div *ngIf="registerForm.get('firstName')?.errors?.minlength">First Name minimum length should be 3</div>
+            <div *ngIf="registerForm.get('firstName')?.errors.required && registerForm.get('firstName').touched">First Name is required</div>
+            <div *ngIf="registerForm.get('firstName')?.errors?.maxlength">First Name maximum length should be 16</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" formControlName="lastName" class="form-control"  appName />
+        <div  class="error-display" *ngIf="registerForm.get('lastName')?.errors">
+            <div *ngIf="registerForm.get('laststName')?.errors?.minlength">Last Name minimum length should be 3</div>
+            <div *ngIf="registerForm.get('lastName')?.errors?.required && registerForm.get('lastName').touched">Last Name is required</div>
+            <div *ngIf="registerForm.get('lastName')?.errors?.maxlength">Last Name maximum length should be 16</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email Id</label>
+        <input type="text" formControlName="email" class="form-control" />
+        <div *ngIf="registerForm.get('email')?.errors" class="error-display">
+            <div *ngIf="registerForm.get('email')?.errors?.required && registerForm.get('email').touched">Email is required</div>
+            <div *ngIf="registerForm.get('email')?.errors?.email && registerForm.get('email').touched">Email is invalid</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="contactNumber">Contact Number</label>
+        <input type="text" formControlName="contactNumber" class="form-control" appPhone/>
+        <div *ngIf="registerForm.get('contactNumber')?.errors" class="error-display">
+            <div *ngIf="registerForm.get('contactNumber')?.errors?.required && registerForm.get('contactNumber').touched">Contact number is required</div>
+            <div *ngIf="registerForm.get('contactNumber')?.errors?.pattern ">Contact number is invalid</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" class="form-control"/>
+        <div *ngIf="registerForm.get('password')?.errors && registerForm.get('password').touched" class="error-display">
+            <div *ngIf="registerForm.get('password')?.errors?.required">Password is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" formControlName="confirmPassword" class="form-control"  (blur)="checkPassword()"/>
+        <div *ngIf="registerForm.get('confirmPassword')?.errors || !invalidPassword" class="error-display">
+            <div *ngIf="registerForm.get('confirmPassword')?.errors?.required && registerForm.get('confirmPassword').touched">Password is required</div>
+            <div *ngIf="registerForm.get('confirmPassword').touched && !invalidPassword">Password and Confirm password should be same</div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid || !invalidPassword" (click)="register()"> Submit</button>
+</form>
